@@ -59,6 +59,47 @@ public:
         size++;
     }
 
+    void pop_first() {
+        if (is_empty()) {
+            cout << "-No items to delete-\n";
+            return;
+        }
+        if (first->next == nullptr) {
+            delete first;
+            first = nullptr;
+            size--;
+            return;
+        }
+        Node* it = new Node;
+        it = first;
+        first->data = it->next->data;
+        first->next = it->next->next;
+        // delete it;
+        size--;
+    }
+
+    void pop_last() {
+        if (is_empty()) {
+            cout << "-No items to delete-\n";
+            return;
+        }
+        if (first->next == nullptr) {
+            delete first;
+            first = nullptr;
+            size--;
+            return;
+        }
+        Node* nod = first;
+        Node* prev_nod = first;
+        while (nod->next != nullptr) {
+            prev_nod = nod;
+            nod = nod->next;
+        }
+        delete nod;
+        prev_nod->next = nullptr;
+        size--;
+    }
+
     friend ostream& operator<<(ostream&, const List&);
 
     ~List() {
@@ -70,11 +111,18 @@ ostream& operator<<(ostream& out, const List& conc) {
     Node* it = new Node;
     it = conc.first;
     out << "\nYour list:\n";
-    while (it->next != nullptr) {
-        out << it->data << " - ";
-        it = it->next;
+    if (conc.is_empty()) {
+        out << "-";
     }
-    out << it->data;
+    else {
+        while (it->next != nullptr) {
+            out << it->data << " - ";
+            it = it->next;
+        }
+        out << it->data;
+    }
+
+
     // delete it;
     out << "\nlength = " << conc.size << endl;
     return out;

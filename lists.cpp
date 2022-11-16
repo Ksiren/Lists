@@ -3,7 +3,7 @@
 int main() {
     List List1 = List();
     int answer;
-    cout << "Enter the number of the action you want to perform:\n1.Checking the list for emptiness;\n2.Adding an item to the top of the list;\n3.Adding an item to the end of the list;\n4.Deleting the first node;\n5.Deleting the last node;\n10.Displaying the entire list on the screen;\n0.Stopping work;\n";
+    cout << "Enter the number of the action you want to perform:\n1.Checking the list for emptiness;\n2.Adding an item to the top of the list;\n3.Adding an item to the end of the list;\n4.Deleting the first node;\n5.Deleting the last node;\n10.Displaying the entire list on the screen;\n__________\n0.Stopping work;\n";
     cin >> answer;
     while (answer != 0) {
         if (answer == 1) {
@@ -35,11 +35,13 @@ int main() {
         }
         else if (answer == 4) {  //Deleting the first node
             cout << "your chose " << answer << endl;
-            cout << "ERROR!\n";
+            List1.pop_first();
+            cout << List1 << endl;
         }
         else if (answer == 5) {  //Deleting the last node
             cout << "your chose " << answer << endl;
-            cout << "ERROR!\n";
+            List1.pop_last();
+            cout << List1 << endl;
         }
         else if (answer == 6) {
             cout << "your chose " << answer << endl;
@@ -59,7 +61,7 @@ int main() {
         }
         else if (answer == 10) {  //Displaying the entire list on the screen
             cout << "your chose " << answer << endl;
-            cout << "ERROR!\n";
+            cout << List1 << endl;
         }
         else if (answer == 11) {
             cout << "your chose " << answer << endl;
