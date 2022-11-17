@@ -1,8 +1,9 @@
 #include<iostream>
 using namespace std;
 
+template<typename num_type>
 struct Node {
-    int data = 0;
+    num_type data = 0;
     Node* next = nullptr;
 
     ~Node() {
@@ -10,10 +11,11 @@ struct Node {
     }
 };
 
+template<typename num_type>
 class List {
 public:
-    int size = 0;
-    Node* first = nullptr;
+    num_type size = 0;
+    Node<num_type>* first = nullptr;
 
 public:
 
@@ -25,105 +27,58 @@ public:
         return false;
     }
 
-    void push_back(int num) {
-        if (is_empty()) {
-            first = new Node;
-            first->data = num;
-            size++;
-            return;
-        }
-        else {
-            Node* it = new Node;
-            it = first;
-            while (it->next != nullptr) {
-                it = it->next;
-            }
-            it->next = new Node;
-            it->next->data = num;
-            // cout << num << ' ' << it->next->data << ' ' << it->data << endl;
-            size++;
-        }
-    }
-
-    void push_ahead(int num) {
-        if (is_empty()) {
-            first = new Node;
-            first->data = num;
-            size++;
-            return;
-        }
-        Node* it = new Node;
-        it->data = num;
-        it->next = first;
-        first = it;
-        size++;
-    }
-
-    void pop_first() {
-        if (is_empty()) {
-            cout << "-No items to delete-\n";
-            return;
-        }
-        if (first->next == nullptr) {
-            delete first;
-            first = nullptr;
-            size--;
-            return;
-        }
-        Node* it = new Node;
-        it = first;
-        first->data = it->next->data;
-        first->next = it->next->next;
-        // delete it;
-        size--;
-    }
-
-    void pop_last() {
-        if (is_empty()) {
-            cout << "-No items to delete-\n";
-            return;
-        }
-        if (first->next == nullptr) {
-            delete first;
-            first = nullptr;
-            size--;
-            return;
-        }
-        Node* nod = first;
-        Node* prev_nod = first;
-        while (nod->next != nullptr) {
-            prev_nod = nod;
-            nod = nod->next;
-        }
-        delete nod;
-        prev_nod->next = nullptr;
-        size--;
-    }
-
-    friend ostream& operator<<(ostream&, const List&);
+    void push_back(num_type num);
+    void push_ahead(num_type num);
+    void pop_first();
+    void pop_last();
 
     ~List() {
         delete first;
     }
 };
 
-ostream& operator<<(ostream& out, const List& conc) {
-    Node* it = new Node;
-    it = conc.first;
-    out << "\nYour list:\n";
-    if (conc.is_empty()) {
-        out << "-";
-    }
-    else {
-        while (it->next != nullptr) {
-            out << it->data << " - ";
-            it = it->next;
-        }
-        out << it->data;
-    }
+template<typename num_type>
+ostream& operator<<(ostream& out, const List<num_type>& conc);
 
+template<typename num_type>
+void List<num_type>::pop_last() {
+    if (is_empty()) {
+        cout << "-No items to delete-\n";
+        return;
+    }
+    if (first->next == nullptr) {
+        delete first;
+        first = nullptr;
+        size--;
+        return;
+    }
+    Node<num_type>* nod = first;
+    Node<num_type>* prev_nod = first;
+    while (nod->next != nullptr) {
+        prev_nod = nod;
+        nod = nod->next;
+    }
+    delete nod;
+    prev_nod->next = nullptr;
+    size--;
+}
 
+template<typename num_type>
+void List<num_type>::pop_first() {
+    if (is_empty()) {
+        cout << "-No items to delete-\n";
+        return;
+    }
+    if (first->next == nullptr) {
+        delete first;
+        first = nullptr;
+        size--;
+        return;
+    }
+    Node<num_type>* it = new Node<num_type>;
+    it = first;
+    first->data = it->next->data;
+    first->next = it->next->next;
     // delete it;
-    out << "\nlength = " << conc.size << endl;
-    return out;
+    size--;
 }
